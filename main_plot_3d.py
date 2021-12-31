@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from grampus.sci_toolkit import get_interpo_data
+from grampus.sci_toolkits import get_interpo_data
 from grampus.pd_toolkits import Process_data_flame
 from grampus.plt_toolkits import Plot3d
 
@@ -33,5 +33,5 @@ for sheetname in file_name_list:
     plc.set_axis_range(x_min=x_axis_min, x_max=x_axis_max, y_min=y_axis_min, y_max=y_axis_max)
     plc.plot_color_map(xx_array, yy_array, zz_array, set_zmin=z_axis_min, set_zmax=z_axis_max)
     # plc.set_axis_label(xlabel=xlabel, ylabel=ylabel)
-    plc.savefig(sheetname, dpi=dpi)
+    plc.savefig(sheetname, dpi=dpi, is_append_datetime=True, is_make_dir=True)
 print('Done')

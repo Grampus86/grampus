@@ -74,6 +74,18 @@ class Process_data_flame(object):
         df_sorted = df.sort_values(col_name, ascending=ascending)
         return df_sorted
 
+    @staticmethod
+    def to_xyz_array(df):
+        """
+        columnsをx_array
+        indexをy_array
+        dataをz_arrayに変換
+        """
+        x_array = df.columns.to_numpy()
+        y_array = df.index.to_numpy()
+        z_array = df.to_numpy()
+        return x_array, y_array, z_array
+
 
 if __name__ == '__main__':
     pass

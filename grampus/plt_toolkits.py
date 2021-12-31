@@ -4,13 +4,16 @@
 import os
 import time
 from datetime import datetime
+import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 # mathtext.FontConstantsBase = mathtext.ComputerModernFontConstants  # 上つき文字の補正
 
 # Latex文字に対応
 plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams["mathtext.fontset"] = "stix"
+plt.rcParams['font.size'] = 18
 
 
 class Setplot(object):
@@ -18,8 +21,9 @@ class Setplot(object):
     プロットエリアを設定
     """
 
-    def __init__(self, ax):
+    def __init__(self, ax, fig):
         self.ax = ax
+        self.fig = fig
 
     @classmethod
     def set_ax(cls, figsize=(8, 6), facecolor='white', right=0.7):
@@ -32,7 +36,7 @@ class Setplot(object):
         fig = plt.figure(figsize=figsize, facecolor=facecolor, linewidth=10)
         fig.subplots_adjust(right=right)
         ax = fig.add_subplot(111)
-        return cls(ax)
+        return cls(ax, fig)
 
     def set_aspect(self):
         """
@@ -49,10 +53,12 @@ class Setplot(object):
         水平+垂直：'both'
         水平のみ：'y'
         垂直のみ：'x'
+        なし:'none
         を引数にとる
         """
         self.ax.set_axisbelow(True)
-        self.ax.grid(axis=grid_axis, color='black', linestyle='dashed', linewidth=0.8)
+        if grid_axis != 'none':
+            self.ax.grid(axis=grid_axis, color='black', linestyle='dashed', linewidth=0.8)
         self.ax.tick_params(labelsize=fontsize, direction='out',
                             length=5, colors='black', bottom=is_bottom_tick)
         self.ax.spines["top"].set_linewidth(1.0)
@@ -230,6 +236,38 @@ class PlotBar(Setplot):
             except IndexError:
                 print('ERROE : `bar_color_list`に色のリストを追加してください')
                 break
+        return self
+
+
+class Plot3d(Setplot):
+
+    def plot_color_map(self, xx_array, yy_array, zz_array, cmap="jet",
+                       set_zmin='null', set_zmax='null'):
+        """
+        3次元カラーマップを作成
+        カラーバーの数字のサイズは当スクリプトの一番上の`plt.rcParams['font.size'] = 18`
+        で規定．それ以外の方法については，今のところわからない．
+        :param xx_array: meshgridで生成した2次元ndarray
+        :param yy_array: meshgridで生成した2次元ndarray
+        :param zz_array: meshgridで生成した2次元ndarray
+        :param cmap: デフォルトはjet
+        :param set_zmin: カラーバーの最小値．デフォルトはzz_arrayの最小値
+        :param set_zmax: カラーバーの最大値．デフォルトはzz_arrayの最大値
+        :return:
+        """
+        if set_zmin == 'null':
+            vmin = np.min(zz_array)
+        else:
+            vmin = set_zmin
+        if set_zmax == 'null':
+            vmax = np.max(zz_array)
+        else:
+            vmax = set_zmax
+        cnt = plt.pcolormesh(xx_array, yy_array, zz_array, cmap=cmap,
+                             vmin=vmin, vmax=vmax)
+        divider = make_axes_locatable(self.ax)
+        cax = divider.append_axes("right", size="5%", pad=0.2)
+        plt.colorbar(cnt, ax=self.ax, cax=cax)
         return self
 
 

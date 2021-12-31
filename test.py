@@ -14,7 +14,7 @@ y5 = np.linspace(0.8, 0.8, 10)
 散布図
 """
 pls1 = PlotScatter.set_ax(figsize=(10, 2))
-pls1.set_plot_layout()
+pls1.set_plot_layout(grid_axis='none')
 pls1.set_axis_range(x_min=0, x_max=10, y_min=0, y_max=2)
 pls1.set_axis_label(xlabel='$\mathrm{cm^2}$', ylabel='xy', font_name='Times New Roman')
 pls1.plot_scatter(x, y1, label='data1$\mu$', facecolor='r', marker='o')

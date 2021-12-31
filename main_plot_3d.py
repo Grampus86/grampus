@@ -11,12 +11,12 @@ figsize = (10, 10)
 # ylabel = 'Y軸'
 xlabel = 'X'
 ylabel = 'Y'
-y_axis_min = -70
+y_axis_min = 0
 y_axis_max = 100
-x_axis_min = -70
-x_axis_max = 70
-z_axis_min = 200
-z_axis_max = 10000
+x_axis_min = 0
+x_axis_max = 100
+z_axis_min = 0
+z_axis_max = 3000
 x_mesh = 100
 y_mesh = 100
 dpi = 300
@@ -32,6 +32,6 @@ for sheetname in file_name_list:
     plc.set_aspect()
     plc.set_axis_range(x_min=x_axis_min, x_max=x_axis_max, y_min=y_axis_min, y_max=y_axis_max)
     plc.plot_color_map(xx_array, yy_array, zz_array, set_zmin=z_axis_min, set_zmax=z_axis_max)
-    # pls1.set_axis_label(xlabel=xlabel, ylabel=ylabel)
+    # plc.set_axis_label(xlabel=xlabel, ylabel=ylabel)
     plc.savefig(sheetname, dpi=dpi)
 print('Done')

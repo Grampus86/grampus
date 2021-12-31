@@ -41,12 +41,14 @@ class Interpolation(object):
     @staticmethod
     def exec_interpo(x_array, y_array, z_array):
         """
-        n次元線型補間．データは必ず昇順の必要あり
-        z_arrayはy_arrayを元に昇順にソートする．
+        n次元線型補間．データは必ず昇順の必要あり．
+        z_arrayは,x軸方向はx_array,y軸方向はy_array
+        を元に昇順にソートする．
         """
         y_array_sorted = np.sort(y_array)
-        z_array_sorted = z_array[np.argsort(y_array)]
-        ff = RegularGridInterpolator((y_array_sorted, x_array), z_array_sorted)
+        x_array_sorted = np.sort(x_array)
+        z_array_sorted = z_array[np.argsort(y_array), :][:, np.argsort(x_array)]
+        ff = RegularGridInterpolator((y_array_sorted, x_array_sorted), z_array_sorted)
         return ff
 
     @staticmethod

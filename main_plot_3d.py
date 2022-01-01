@@ -49,6 +49,6 @@ for sheetname in file_name_list:
     plc.set_aspect()
     plc.set_axis_range(x_min=x_axis_min, x_max=x_axis_max, y_min=y_axis_min, y_max=y_axis_max)
     plc.plot_color_map(xx_array, yy_array, zz_array, set_zmin=z_axis_min, set_zmax=z_axis_max)
-    # plc.set_axis_label(xlabel=xlabel, ylabel=ylabel)
+    plc.set_axis_label(xlabel=xlabel, ylabel=ylabel)
     plc.savefig(sheetname, dpi=dpi, is_append_datetime=True)
 print('Done')

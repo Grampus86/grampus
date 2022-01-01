@@ -1,27 +1,44 @@
-import matplotlib.pyplot as plt
-import pandas as pd
+"""
+エクセルのデータからカラーマップを作成．
+各シートのデータ分だけ図が作成される．
+ただし，シート名が'_'から始まるものは無視される．
+'sample_data.xlsx'の場合
+'sample_1','sample_2'のみ読み込まれ，図が作成される．
+'_sample_3'はシート名が'_'から始まるため無視される.
+"""
 
+import pandas as pd
 from grampus.sci_toolkits import get_interpo_data
 from grampus.pd_toolkits import Process_data_flame
 from grampus.plt_toolkits import Plot3d
 
-file_name = 'data.xlsx'
-figsize = (10, 10)
-# xlabel = 'X軸'
-# ylabel = 'Y軸'
-xlabel = 'X'
-ylabel = 'Y'
-y_axis_min = 0
-y_axis_max = 100
-x_axis_min = 0
-x_axis_max = 100
-z_axis_min = 0
-z_axis_max = 3000
-x_mesh = 100
-y_mesh = 100
-dpi = 300
+"""
+必ず設定
+"""
+file_name = 'sample_data.xlsx'  # エクセルファイル名
+figsize = (10, 10)  # 図サイズ，アスペクト比とおよそ同じ比率にする
+xlabel = 'X'  # X軸ラベル
+ylabel = 'Y'  # Y軸ラベル
+y_axis_min = 0  # Y軸最小値
+y_axis_max = 100  # Y軸最大値
+x_axis_min = 0  # X軸最小値
+x_axis_max = 100  # X軸最大値
+z_axis_min = 0  # Z軸最小値(カラーバー最小値)
+z_axis_max = 3000  # Z軸最小値(つまりカラーバー最大値)
+
+"""
+任意設定
+"""
+x_mesh = 100  # X方向メッシュ数
+y_mesh = 100  # X方向メッシュ数
+dpi = 300  # 図の解像度
+
+"""
+処理内容
+"""
 
 pdf = Process_data_flame()
+# エクセルシート名取得
 file_name_list = pdf.get_excel_sheet_name(file_name)
 for sheetname in file_name_list:
     df = pd.read_excel(file_name, sheet_name=sheetname, index_col=0)
@@ -33,5 +50,5 @@ for sheetname in file_name_list:
     plc.set_axis_range(x_min=x_axis_min, x_max=x_axis_max, y_min=y_axis_min, y_max=y_axis_max)
     plc.plot_color_map(xx_array, yy_array, zz_array, set_zmin=z_axis_min, set_zmax=z_axis_max)
     # plc.set_axis_label(xlabel=xlabel, ylabel=ylabel)
-    plc.savefig(sheetname, dpi=dpi, is_append_datetime=True, is_make_dir=True)
+    plc.savefig(sheetname, dpi=dpi, is_append_datetime=True)
 print('Done')

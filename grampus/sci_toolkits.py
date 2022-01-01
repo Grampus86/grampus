@@ -32,7 +32,7 @@ class ProcessArray(object):
 
 class Interpolation(object):
     """
-    データの補完
+    データの補間
     """
 
     def __init__(self):

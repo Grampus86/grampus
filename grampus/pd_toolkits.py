@@ -55,9 +55,13 @@ class Process_data_flame(object):
     def get_excel_sheet_name(data_file_name):
         """
         エクセルのシート名の一覧を取得
+        シート名が'_'で始まるものは除外（コメントアウト）
+        ['sample_1', 'sample_2', '_sample_3']であれば，
+        '_sample_3'は除外される
         """
         df_for_get_sheet_name = pd.read_excel(data_file_name, sheet_name=None)
-        sheet_name_list = list(df_for_get_sheet_name.keys())
+        all_sheet_name_list = list(df_for_get_sheet_name.keys())
+        sheet_name_list = [sheet_name for sheet_name in all_sheet_name_list if sheet_name[0] != '_']
         return sheet_name_list
 
     @staticmethod

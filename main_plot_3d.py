@@ -17,8 +17,8 @@ from grampus.plt_toolkits import Plot3d
 """
 file_name = 'sample_data.xlsx'  # エクセルファイル名
 figsize = (10, 10)  # 図サイズ，アスペクト比とおよそ同じ比率にする
-xlabel = 'X'  # X軸ラベル
-ylabel = 'Y'  # Y軸ラベル
+xlabel = 'x axis $\mathrm{(J \cdot K^{-1})}$'  # X軸ラベル
+ylabel = 'y axis $\mathrm{(cm^2)}$'  # Y軸ラベル
 y_axis_min = 0  # Y軸最小値
 y_axis_max = 100  # Y軸最大値
 x_axis_min = 0  # X軸最小値
@@ -32,6 +32,7 @@ z_axis_max = 3000  # Z軸最小値(つまりカラーバー最大値)
 x_mesh = 100  # X方向メッシュ数
 y_mesh = 100  # X方向メッシュ数
 dpi = 300  # 図の解像度
+font_name = 'Times New Roman'
 
 """
 処理内容
@@ -49,6 +50,6 @@ for sheetname in file_name_list:
     plc.set_aspect()
     plc.set_axis_range(x_min=x_axis_min, x_max=x_axis_max, y_min=y_axis_min, y_max=y_axis_max)
     plc.plot_color_map(xx_array, yy_array, zz_array, set_zmin=z_axis_min, set_zmax=z_axis_max)
-    plc.set_axis_label(xlabel=xlabel, ylabel=ylabel)
+    plc.set_axis_label(xlabel=xlabel, ylabel=ylabel,font_name=font_name)
     plc.savefig(sheetname, dpi=dpi, is_append_datetime=True)
 print('Done')

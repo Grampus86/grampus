@@ -1,4 +1,3 @@
-import os
 import time
 from datetime import datetime
 import numpy as np
@@ -137,7 +136,7 @@ class Setplot(object):
         plt.close()
         return self
 
-    def savefig(self, figname, dpi=300, is_append_datetime=True, is_make_dir=False):
+    def savefig(self, figname, dpi=300, is_append_datetime=True, save_dir_name='.'):
         """
         グラフを保存。
         日付を付けたければ、'is_append_datetime'を'True'にする
@@ -147,10 +146,6 @@ class Setplot(object):
             save_file_name = '{0}_{1:%Y%m%d%H%M%S}'.format(figname, now)
         else:
             save_file_name = '{0}'.format(figname)
-        save_dir_name = '.'
-        if is_make_dir:
-            save_dir_name = '{0:%Y%m%d%H%M%S}'.format(now)
-            os.mkdir(save_dir_name)
         plt.savefig('{0}/{1}.jpeg'.format(save_dir_name, save_file_name),
                     dpi=dpi, bbox_inches="tight")
         time.sleep(3)

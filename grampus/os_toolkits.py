@@ -33,7 +33,7 @@ class OsProc(object):
         ex)
         [aaa.py bbb.py xxx.txt sample_xxx.txt]
         ・ファイル名にpyが含まれる
-        pattern='.*py*.'
+        pattern='.*py*.'もしくはpattern='py'
         [aaa.py, bbb.py]
 
         ・ファイル名の先頭がxxx

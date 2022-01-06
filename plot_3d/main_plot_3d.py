@@ -38,19 +38,15 @@ font_name = 'Times New Roman'  # フォント
 """
 処理内容
 """
-# 図保存用ディレクトリを保存
-save_dir_name = OsProc.creat_dir('.', 'figure', is_append_datetime=True, is_return_dirname=True)
-# エクセルファイル読み込み
+save_dir_name = \
+    OsProc.creat_dir('.', 'figure', is_append_datetime=True, is_return_dirname=True)  # 図保存用ディレクトリを保存
 pdf = Process_data_flame()  # インスタンス生成
 file_name_list = pdf.get_excel_sheet_name(file_name)  # エクセルシート名取得
 for sheetname in file_name_list:
-    # ファイル読み込み
-    df = pd.read_excel(file_name, sheet_name=sheetname, index_col=0)
-    # 線形補間
+    df = pd.read_excel(file_name, sheet_name=sheetname, index_col=0)  # 各シートのデータを読み込みdfへ
     x_array, y_array, z_array = pdf.to_xyz_array(df)  # dfをx,y,z配列へ
-    xx_array, yy_array, zz_array = get_interpo_data(x_array, y_array, z_array, x_mesh=x_mesh, y_mesh=y_mesh)  # 補間
-    # カラープロット
-    plc = Plot3d.set_ax(figsize=figsize)  # インスタンス生成
+    xx_array, yy_array, zz_array = get_interpo_data(x_array, y_array, z_array, x_mesh=x_mesh, y_mesh=y_mesh)  # 線形補間
+    plc = Plot3d.set_ax(figsize=figsize)  # カラーマップ用インスタンス生成
     plc.set_plot_layout(grid_axis='none')  # レイアウト設定
     plc.set_aspect()  # アスペクト比
     plc.set_axis_range(x_min=x_axis_min, x_max=x_axis_max, y_min=y_axis_min, y_max=y_axis_max)  # xy軸の範囲設定

@@ -8,7 +8,7 @@ class OsProc(object):
         pass
 
     @staticmethod
-    def creat_dir(basename, path, is_append_datetime=True, is_return_dirname=True):
+    def creat_dir(path, basename, is_append_datetime=True, is_return_dirname=True):
         """
         ディレクトリを作成.pathは絶対パス推奨.
         ファイル名をreturnするときは

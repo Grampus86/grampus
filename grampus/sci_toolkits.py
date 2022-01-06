@@ -98,3 +98,7 @@ class NumericalCalc(object):
         # y軸方向(axis=0)に数値積分
         calc_int_xy = integrate.cumtrapz(calc_int_x, y_array, axis=0)
         return calc_int_xy
+
+
+if __name__ == '__main__':
+    pass

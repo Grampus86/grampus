@@ -54,7 +54,7 @@ class Setplot(object):
         """
         self.ax.set_axisbelow(True)
         if grid_axis != 'none':
-            self.ax.grid(axis=grid_axis, color='black', linestyle='dashed', linewidth=0.8)
+            self.ax.grid(axis=grid_axis, color='gray', linestyle='dashed', linewidth=0.8)
         self.ax.tick_params(labelsize=fontsize, direction='out',
                             length=5, colors='black', bottom=is_bottom_tick)
         self.ax.spines["top"].set_linewidth(1.0)

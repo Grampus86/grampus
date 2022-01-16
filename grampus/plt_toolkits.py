@@ -157,6 +157,12 @@ class Setplot(object):
         """
         return self.ax
 
+    def return_fig(self):
+        """
+        axを返す
+        """
+        return self.fig
+
 
 class PlotScatter(Setplot):
     """

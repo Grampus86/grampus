@@ -1,7 +1,11 @@
-#this is test for grampus
+import os
+import sys
+
 from grampus.plt_toolkits import PlotScatter, PlotLine, PlotBar
 import numpy as np
 import pandas as pd
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 x = np.linspace(0, 10, 10)
 y1 = np.linspace(0, 1, 10)
@@ -15,7 +19,7 @@ y5 = np.linspace(0.8, 0.8, 10)
 """
 pls1 = PlotScatter.set_ax(figsize=(10, 2))
 pls1.set_plot_layout(grid_axis='none')
-pls1.set_axis_range(x_min=0, x_max=10, y_min=0, y_max=2)
+pls1.set_axis_range(x_min=0, x_max=10, y_min=0, y_max=4)
 pls1.set_axis_label(xlabel='$\mathrm{cm^2}$', ylabel='xy', font_name='Times New Roman')
 pls1.plot_scatter(x, y1, label='data1$\mu$', facecolor='r', marker='o')
 pls1.plot_scatter(x, y2, label='data2', facecolor='b', marker='v')
@@ -61,21 +65,38 @@ by3 = df['col3'].to_numpy()
 by4 = df['col4'].to_numpy()
 by5 = df['col5'].to_numpy()
 y_list = [by1, by2, by3, by4, by5]
-xb = np.array([2, 4, 6])
+xb = np.array([2, 5, 8])
 label_list = df.columns.tolist()
 xticks_label = df.index.tolist()
 plb = PlotBar.set_ax()
 plb.set_plot_layout(grid_axis='y')
-plb.set_axis_range(x_min=0, x_max=8, y_min=0, y_max=1)
+plb.set_axis_range(x_min=0, x_max=10, y_min=0, y_max=1)
+plb.mlt_plot_bar(x_data=xb, y_data_list=y_list, width=.4, label_list=label_list)
+plb.set_legend()
+plb.replace_xticks(xb, xticks_label)
+plb.plt_show()
+
+"""
+棒グラフ & ライン
+"""
+df = pd.read_excel('test_data.xlsx', index_col=0)
+by1 = df['col1'].to_numpy()
+by2 = df['col2'].to_numpy()
+by3 = df['col3'].to_numpy()
+y_list = [by1, by2, by3]
+xb = np.array([2, 5, 8])
+label_list = df.columns.tolist()
+xticks_label = df.index.tolist()
+plb = PlotBar.set_ax()
+plb.set_plot_layout(grid_axis='y')
+plb.set_axis_range(x_min=0, x_max=10, y_min=0, y_max=1)
 plb.mlt_plot_bar(x_data=xb, y_data_list=y_list, width=.4, label_list=label_list)
 plb.set_legend()
 plb.replace_xticks(xb, xticks_label)
 ax = plb.return_ax()
-plb.plt_show()
-"""
-ライン
-"""
-pll = PlotLine(ax)
+fig = plb.return_fig()
+pll = PlotLine(ax, fig)
 pll.plot_line(x, y1, linewidth=1, color="red", linestyle="dashed", marker="o", markersize=4)
 pll.plot_line(x, y2, linewidth=1, color="b", linestyle="dashed", marker="v", markersize=4)
+pll.set_legend()
 pll.plt_show()

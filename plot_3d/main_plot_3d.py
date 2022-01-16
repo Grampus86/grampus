@@ -6,7 +6,10 @@
 'sample_1','sample_2'のみ読み込まれ，図が作成される．
 '_sample_3'はシート名が'_'から始まるため無視される.
 """
+import os
+import sys
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from grampus.sci_toolkits import get_interpo_data
 from grampus.pd_toolkits import Process_data_flame
 from grampus.plt_toolkits import Plot3d

@@ -10,6 +10,24 @@ class Process_data_flame(object):
         pass
 
     @staticmethod
+    def read_data_file(file_name, file_type='excel', sheet_name=None, index_col=0):
+        """
+        ファイルを読み込み.エクセルとcsvに対応．
+        :param file_name: ファイル名指定
+        :param file_type: デフォルトは'excel',csvファイルなら，file_type='csv'
+        :param sheet_name: 左のシートから0,1,2...　名前でも指定可
+        :param index_col: デフォルトは`0`．一番左の列をインデックスとして読み込む
+        :return: df
+        """
+        if file_type == 'excel':
+            df = pd.read_excel(file_name, sheet_name=sheet_name, index_col=index_col)
+        elif file_type == 'csv':
+            df = pd.read_csv(file_name, index_col=index_col)
+        else:
+            df = None
+        return df
+
+    @staticmethod
     def create_date_col(df, year_col, month_col, day_col,
                         date_col_name='date', fill_zero_num=2):
         """

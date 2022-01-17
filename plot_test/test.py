@@ -40,8 +40,8 @@ pls2.plt_show()
 """
 ライン
 """
-pll = PlotLine.set_ax()
-pll.set_plot_layout()
+pll = PlotLine.set_ax(inner_facecolor='g')
+pll.set_plot_layout(grid_color='w', fontsize=24)
 pll.set_axis_range(x_min=0, x_max=10, y_min=0, y_max=10)
 pll.plot_line(x, y1, linewidth=1, color="red", linestyle="dashed", marker="o", markersize=4)
 pll.plot_line(x, y2, linewidth=1, color="b", linestyle="dashed", marker="v", markersize=4)

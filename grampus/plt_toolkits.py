@@ -22,16 +22,17 @@ class Setplot(object):
         self.fig = fig
 
     @classmethod
-    def set_ax(cls, figsize=(8, 6), facecolor='white', right=0.7):
+    def set_ax(cls, figsize=(8, 6), inner_facecolor='white', outer_facecolor='white', right=0.7):
         """
         fig,axを設定
         figsize=(横,縦)
         プロットエリアの大きさ、線の幅、色を決める。
-        facecolorを'white'にしておくことでmonokaiで見にくくなる問題を回避
+        out_facecolorを'white'にしておくことでmonokaiで見にくくなる問題を回避
         """
-        fig = plt.figure(figsize=figsize, facecolor=facecolor, linewidth=10)
+        fig = plt.figure(figsize=figsize, facecolor=outer_facecolor, linewidth=10)
         fig.subplots_adjust(right=right)
         ax = fig.add_subplot(111)
+        ax.set_facecolor(inner_facecolor)
         return cls(ax, fig)
 
     def set_aspect(self):
@@ -42,7 +43,7 @@ class Setplot(object):
         self.ax.set_aspect('equal')
         return self
 
-    def set_plot_layout(self, grid_axis='both', fontsize=18, is_bottom_tick=True):
+    def set_plot_layout(self, grid_axis='both', grid_color='gray', fontsize=18, is_bottom_tick=True):
         """
         プロットエリアのグリット線と軸の数字の大きさを設定
         ax.grid線は、
@@ -54,7 +55,7 @@ class Setplot(object):
         """
         self.ax.set_axisbelow(True)
         if grid_axis != 'none':
-            self.ax.grid(axis=grid_axis, color='gray', linestyle='dashed', linewidth=0.8)
+            self.ax.grid(axis=grid_axis, color=grid_color, linestyle='dashed', linewidth=0.8)
         self.ax.tick_params(labelsize=fontsize, direction='out',
                             length=5, colors='black', bottom=is_bottom_tick)
         self.ax.spines["top"].set_linewidth(1.0)

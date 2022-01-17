@@ -26,7 +26,7 @@ pls1.plot_scatter(x, y2, label='data2', facecolor='b', marker='v')
 pls1.set_aspect()
 pls1.set_legend()
 pls1.plt_show()
-#
+
 pls2 = PlotScatter.set_ax()
 pls2.set_plot_layout()
 pls2.set_axis_range(x_min=0, x_max=10, y_min=0, y_max=10)
@@ -35,7 +35,6 @@ pls2.plot_scatter(x, y4, label='data4\n($\Delta d$)', facecolor='y', marker='s')
 pls2.plot_scatter(x, y5, label='data5', facecolor='None', marker='o')
 pls2.set_legend(fontsize=10)
 pls2.plt_show()
-#
 
 """
 ライン
@@ -52,10 +51,10 @@ pll.plt_show()
 """
 """
 'test_data.xlsx'の中身
-     col1 col2 col3	col4 col5
-row1 0.4 0.2 0.2 0.3 0.1
-row2 0.1 0.2 0.3 0.4 0.1
-row3 0.9 0.3 0.0 0.1 0.2
+     col1 col2 col3 col4 col5
+row1 0.4  0.2  0.2  0.3  0.1
+row2 0.1  0.2  0.3  0.4  0.1
+row3 0.9  0.3  0.0  0.1  0.2
 """
 
 df = pd.read_excel('test_data.xlsx', index_col=0)

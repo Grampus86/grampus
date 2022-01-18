@@ -160,7 +160,7 @@ class Setplot(object):
 
     def return_fig(self):
         """
-        axを返す
+        figを返す
         """
         return self.fig
 
@@ -212,7 +212,7 @@ class PlotBar(Setplot):
                      bar_color_list=('b', 'r', 'g', 'y', 'gray'), width=0.3, **kwargs):
         """
         横に複数並べた棒グラフを作成。
-        幾つかのこうもくを比較するのに使用。
+        幾つかの項目を比較するのに使用。
         棒グラフの位置は'if..else..'の部分で処理。
         :param x_data: 各棒グラフのx軸位置情報
         :param y_data_list: 棒グラフの高さ
@@ -241,11 +241,15 @@ class PlotBar(Setplot):
 class Plot3d(Setplot):
 
     def plot_color_map(self, xx_array, yy_array, zz_array, cmap="jet",
-                       set_zmin='null', set_zmax='null'):
+                       set_zmin='null', set_zmax='null', fontsize=18):
         """
         3次元カラーマップを作成
         カラーバーの数字のサイズは当スクリプトの一番上の`plt.rcParams['font.size'] = 18`
         で規定．それ以外の方法については，今のところわからない．
+        [20220118]
+        x,y軸の目盛りサイズは`set_plot_layout`で規定する．
+        plt.tick_params(label=18)で規定できる．->機能追加
+        参考:https://qiita.com/aisha/items/6c84a734b6bd1605b5c9
         :param xx_array: meshgridで生成した2次元ndarray
         :param yy_array: meshgridで生成した2次元ndarray
         :param zz_array: meshgridで生成した2次元ndarray
@@ -267,6 +271,7 @@ class Plot3d(Setplot):
         divider = make_axes_locatable(self.ax)
         cax = divider.append_axes("right", size="5%", pad=0.2)
         plt.colorbar(cnt, ax=self.ax, cax=cax)
+        plt.tick_params(labelsize=fontsize)
         return self
 
 

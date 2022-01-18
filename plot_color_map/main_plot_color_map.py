@@ -52,7 +52,8 @@ if __name__ == '__main__':
         plc.set_plot_layout(grid_axis='none')  # レイアウト設定
         plc.set_aspect()  # アスペクト比
         plc.set_axis_range(x_min=x_axis_min, x_max=x_axis_max, y_min=y_axis_min, y_max=y_axis_max)  # xy軸の範囲設定
-        plc.plot_color_map(xx_array, yy_array, zz_array, set_zmin=z_axis_min, set_zmax=z_axis_max)  # カラーマップ
+        plc.plot_color_map(xx_array, yy_array, zz_array,
+                           set_zmin=z_axis_min, set_zmax=z_axis_max, fontsize=18)  # カラーマップ
         plc.set_axis_label(xlabel=xlabel, ylabel=ylabel, font_name=font_name)  # xy軸ラベル
         plc.savefig(sheetname, dpi=dpi, is_append_datetime=True, save_dir_name=save_dir_name)  # 図保存
     print('Done!')

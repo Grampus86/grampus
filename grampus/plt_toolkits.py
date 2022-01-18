@@ -160,7 +160,7 @@ class Setplot(object):
 
     def return_fig(self):
         """
-        axを返す
+        figを返す
         """
         return self.fig
 
@@ -212,7 +212,7 @@ class PlotBar(Setplot):
                      bar_color_list=('b', 'r', 'g', 'y', 'gray'), width=0.3, **kwargs):
         """
         横に複数並べた棒グラフを作成。
-        幾つかのこうもくを比較するのに使用。
+        幾つかの項目を比較するのに使用。
         棒グラフの位置は'if..else..'の部分で処理。
         :param x_data: 各棒グラフのx軸位置情報
         :param y_data_list: 棒グラフの高さ

@@ -3,53 +3,46 @@ from scipy import integrate
 import numpy as np
 
 
-def get_interpo_data(x_array, y_array, z_array, x_mesh=1000, y_mesh=1000):
-    """
-    補間したデータを作成
-    """
-    itp = Interpolation()
-    ff = itp.exec_interpo(x_array, y_array, z_array)
-    xx_array, yy_array = ProcessArray.get_xy_grid(x_array, y_array, x_mesh=x_mesh, y_mesh=y_mesh)
-    xi = itp.get_xi(xx_array, yy_array)
-    zz_array = itp.get_obj_var(ff, xi)
-    return xx_array, yy_array, zz_array
-
-
-class ProcessArray(object):
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def get_xy_grid(x_array, y_array, x_mesh=100, y_mesh=100):
-        """
-        x,yメッシュを作成
-        """
-        meshed_x_array = np.linspace(x_array[0], x_array[-1], x_mesh)
-        meshed_y_array = np.linspace(y_array[0], y_array[-1], y_mesh)
-        xx_array, yy_array = np.meshgrid(meshed_x_array, meshed_y_array)
-        return xx_array, yy_array
-
-
-class Interpolation(object):
+class GetMeshArray(object):
     """
     データの補間
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, x_array, y_array, z_array):
+        self.x_array = x_array
+        self.y_array = y_array
+        self.z_array = z_array
 
-    @staticmethod
-    def exec_interpo(x_array, y_array, z_array):
+    def get_interpo_data(self, x_mesh=1000, y_mesh=1000):
+        """
+        補間したデータを作成
+        """
+        ff = self.exec_interpo()
+        xx_array, yy_array = self.get_xy_grid(x_mesh=x_mesh, y_mesh=y_mesh)
+        xi = self.get_xi(xx_array, yy_array)
+        zz_array = self.get_obj_var(ff, xi)
+        return xx_array, yy_array, zz_array
+
+    def exec_interpo(self):
         """
         n次元線型補間．データは必ず昇順の必要あり．
         z_arrayは,x軸方向はx_array,y軸方向はy_array
         を元に昇順にソートする．
         """
-        y_array_sorted = np.sort(y_array)
-        x_array_sorted = np.sort(x_array)
-        z_array_sorted = z_array[np.argsort(y_array), :][:, np.argsort(x_array)]
+        y_array_sorted = np.sort(self.y_array)
+        x_array_sorted = np.sort(self.x_array)
+        z_array_sorted = self.z_array[np.argsort(self.y_array), :][:, np.argsort(self.x_array)]
         ff = RegularGridInterpolator((y_array_sorted, x_array_sorted), z_array_sorted)
         return ff
+
+    def get_xy_grid(self, x_mesh=100, y_mesh=100):
+        """
+        x,yメッシュを作成
+        """
+        meshed_x_array = np.linspace(self.x_array[0], self.x_array[-1], x_mesh)
+        meshed_y_array = np.linspace(self.y_array[0], self.y_array[-1], y_mesh)
+        xx_array, yy_array = np.meshgrid(meshed_x_array, meshed_y_array)
+        return xx_array, yy_array
 
     @staticmethod
     def get_xi(xx_array, yy_array):

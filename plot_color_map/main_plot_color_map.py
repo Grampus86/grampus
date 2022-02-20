@@ -48,7 +48,7 @@ if __name__ == '__main__':
         df = pdf.read_data_file(file_name, sheet_name=sheetname, index_col=0)
         x_array, y_array, z_array = pdf.to_xyz_array(df)  # dfをx,y,z配列へ
         inp = GetMeshArray(x_array, y_array, z_array)
-        xx_array, yy_array, zz_array = inp.get_interpo_data(x_mesh=x_mesh, y_mesh=y_mesh)  # 線形補間
+        xx_array, yy_array, zz_array = inp.prep_data_for_colormap(False)  # 線形補間
         plc = Plot3d.set_ax(figsize=figsize)  # カラーマップ用インスタンス生成
         plc.set_plot_layout(grid_axis='none')  # レイアウト設定
         plc.set_aspect()  # アスペクト比

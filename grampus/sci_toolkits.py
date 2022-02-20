@@ -5,25 +5,41 @@ import numpy as np
 
 class GetMeshArray(object):
     """
-    データの補間
+    メッシュグリッドを作成
+    データの補間も可能
     """
 
-    def __init__(self, x_array, y_array, z_array):
+    def __init__(self, x_array, y_array, z_array, x_mesh=1000, y_mesh=1000):
         self.x_array = x_array
         self.y_array = y_array
         self.z_array = z_array
+        self.x_mesh = x_mesh
+        self.y_mesh = y_mesh
 
-    def get_interpo_data(self, x_mesh=1000, y_mesh=1000):
+    def prep_data_for_colormap(self, is_interporation=False):
+        """
+        カラーマップ用のデータ
+        `xx_array`, `yy_array`, `zz_array`を準備
+        補間する場合は，`is_interporation`を`True`にする
+        """
+        if is_interporation:
+            xx_array, yy_array, zz_array = self._get_interpo_data()
+        else:
+            xx_array, yy_array = np.meshgrid(self.x_array, self.y_array)
+            zz_array = self.z_array
+        return xx_array, yy_array, zz_array
+
+    def _get_interpo_data(self):
         """
         補間したデータを作成
         """
-        ff = self.exec_interpo()
-        xx_array, yy_array = self.get_xy_grid(x_mesh=x_mesh, y_mesh=y_mesh)
-        xi = self.get_xi(xx_array, yy_array)
-        zz_array = self.get_obj_var(ff, xi)
+        ff = self._exec_interpo()
+        xx_array, yy_array = self._get_xy_grid()
+        xi = self._get_xi(xx_array, yy_array)
+        zz_array = self._get_obj_var(ff, xi)
         return xx_array, yy_array, zz_array
 
-    def exec_interpo(self):
+    def _exec_interpo(self):
         """
         n次元線型補間．データは必ず昇順の必要あり．
         z_arrayは,x軸方向はx_array,y軸方向はy_array
@@ -35,17 +51,17 @@ class GetMeshArray(object):
         ff = RegularGridInterpolator((y_array_sorted, x_array_sorted), z_array_sorted)
         return ff
 
-    def get_xy_grid(self, x_mesh=100, y_mesh=100):
+    def _get_xy_grid(self):
         """
         x,yメッシュを作成
         """
-        meshed_x_array = np.linspace(self.x_array[0], self.x_array[-1], x_mesh)
-        meshed_y_array = np.linspace(self.y_array[0], self.y_array[-1], y_mesh)
+        meshed_x_array = np.linspace(self.x_array[0], self.x_array[-1], self.x_mesh)
+        meshed_y_array = np.linspace(self.y_array[0], self.y_array[-1], self.y_mesh)
         xx_array, yy_array = np.meshgrid(meshed_x_array, meshed_y_array)
         return xx_array, yy_array
 
     @staticmethod
-    def get_xi(xx_array, yy_array):
+    def _get_xi(xx_array, yy_array):
         """
         x，y座標のペアの行列を作成
         get_obj_varで用いる
@@ -54,7 +70,7 @@ class GetMeshArray(object):
         return xi_array
 
     @staticmethod
-    def get_obj_var(ff, xi_array):
+    def _get_obj_var(ff, xi_array):
         """
         補間を利用して目的変数を取得
         """

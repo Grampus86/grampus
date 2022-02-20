@@ -53,6 +53,17 @@ class OsProc(object):
         file_list = [file for file in only_file_list if re.search(pattern, file)]
         return file_list
 
+    @staticmethod
+    def get_dir_name(path, pattern='.*.'):
+        """
+        指定したディレクトリのディレクトリ名を取得
+        正規表現使用可能
+        """
+        file_dir_list = os.listdir(path)
+        only_dir_list = [dir for dir in file_dir_list if os.path.isdir(os.path.join(path, dir))]
+        dir_list = [dir for dir in only_dir_list if re.search(pattern, dir)]
+        return dir_list
+
 
 if __name__ == '__main__':
     pass

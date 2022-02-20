@@ -267,7 +267,7 @@ class Plot3d(Setplot):
         else:
             vmax = set_zmax
         cnt = plt.pcolormesh(xx_array, yy_array, zz_array, cmap=cmap,
-                             vmin=vmin, vmax=vmax)
+                             vmin=vmin, vmax=vmax, shading='auto')
         divider = make_axes_locatable(self.ax)
         cax = divider.append_axes("right", size="5%", pad=0.2)
         plt.colorbar(cnt, ax=self.ax, cax=cax)

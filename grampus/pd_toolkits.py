@@ -10,12 +10,12 @@ class Process_data_flame(object):
         pass
 
     @staticmethod
-    def read_data_file(file_name, file_type='excel', sheet_name=None, index_col=0):
+    def read_data_file(file_name, file_type='excel', sheet_name=0, index_col=0):
         """
         ファイルを読み込み.エクセルとcsvに対応．
         :param file_name: ファイル名指定
         :param file_type: デフォルトは'excel',csvファイルなら，file_type='csv'
-        :param sheet_name: 左のシートから0,1,2...　名前でも指定可
+        :param sheet_name: 左のシートから0,1,2...　名前でも指定可。デフォルトは0
         :param index_col: デフォルトは`0`．一番左の列をインデックスとして読み込む
         :return: df
         """
@@ -24,7 +24,7 @@ class Process_data_flame(object):
         elif file_type == 'csv':
             df = pd.read_csv(file_name, index_col=index_col)
         else:
-            df = None
+            df = pd.read_table(file_name, index_col=index_col)
         return df
 
     @staticmethod
@@ -107,6 +107,16 @@ class Process_data_flame(object):
         y_array = df.index.to_numpy()
         z_array = df.to_numpy()
         return x_array, y_array, z_array
+
+    @staticmethod
+    def concat_df(*df_args):
+        """
+        :param df_arg:結合したいdf
+        :return: 結合後のdf
+        """
+        df_list = list(df_args)
+        df_concat = pd.concat(df_list)
+        return df_concat
 
 
 if __name__ == '__main__':

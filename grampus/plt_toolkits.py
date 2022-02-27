@@ -113,6 +113,9 @@ class Setplot(object):
                        fancybox=False, edgecolor="black", framealpha=1)
         return self
 
+    def set_title(self, title, fontsize=14):
+        self.ax.set_title(title, fontsize=fontsize)
+
     def replace_xticks(self, xticks_array, xticks_label, rad=0):
         """
         x軸の目盛りを置換

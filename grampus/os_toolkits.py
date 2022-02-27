@@ -51,7 +51,8 @@ class OsProc(object):
         file_dir_list = os.listdir(path)
         only_file_list = [file for file in file_dir_list if os.path.isfile(os.path.join(path, file))]
         file_list = [file for file in only_file_list if re.search(pattern, file)]
-        return file_list
+        file_name_list_sorted = sorted(file_list, key=lambda x: int((re.search(r"[0-9]+", x)).group(0)))
+        return file_name_list_sorted
 
     @staticmethod
     def get_dir_name(path, pattern='.*.'):
@@ -62,7 +63,8 @@ class OsProc(object):
         file_dir_list = os.listdir(path)
         only_dir_list = [dir for dir in file_dir_list if os.path.isdir(os.path.join(path, dir))]
         dir_list = [dir for dir in only_dir_list if re.search(pattern, dir)]
-        return dir_list
+        dir_name_list_sorted = sorted(dir_list, key=lambda x: int((re.search(r"[0-9]+", x)).group(0)))
+        return dir_name_list_sorted
 
 
 if __name__ == '__main__':
